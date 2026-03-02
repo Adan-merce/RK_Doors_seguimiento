@@ -6,6 +6,24 @@
 </head>
 <body>
     <h1>Bienvenido, Operador</h1>
+
+    <h2>Subir Archivos</h2>
+    <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+        <div>
+            <h3>Avances</h3>
+            <input type="file" name="avance_file">
+        </div>
+        <div>
+            <h3>Evidencia</h3>
+            <input type="file" name="evidencia_file">
+        </div>
+        <div>
+            <h3>Reporte</h3>
+            <input type="file" name="reporte_file">
+        </div>
+        <button type="submit">Subir Archivos</button>
+    </form>
+
     <h2>Seguimiento</h2>
     <div id="seguimientoContainer">
         <!-- Aquí se mostrará el registro de seguimiento -->
