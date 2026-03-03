@@ -18,8 +18,31 @@
         </div>
         <button type="submit">Iniciar Sesión</button>
     </form>
-    <p id="mensajeError"></p>
+    <p id="mensajeError" style="color:red;"></p>
 
-    <script src="script.js"></script>
+    <script>
+      // Código JavaScript corregido
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const mensajeError = document.getElementById('mensajeError');
+
+        form.addEventListener('submit', function(event) {
+          event.preventDefault(); // evita que se recargue la página
+
+          const usuario = document.getElementById('usuario').value;
+          const contraseña = document.getElementById('contraseña').value;
+
+          // Validación simple (puedes cambiar los datos por los que desees)
+          if (usuario === 'Operacion_RK' && contraseña === 'tu_contraseña') {
+            mensajeError.style.color = 'green';
+            mensajeError.textContent = 'Ingreso correcto!';
+            // Aquí puedes redirigir o hacer otra acción
+          } else {
+            mensajeError.style.color = 'red';
+            mensajeError.textContent = 'Usuario o contraseña incorrectos.';
+          }
+        });
+      });
+    </script>
 </body>
 </html>
