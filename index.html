@@ -4,15 +4,12 @@
     <meta charset="UTF-8" />
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" type="text/css" href="estilos.css" />
+    <button id="crearRegistroBtn">Crear Registro Operador</button>
+<button id="crearSupervisorBtn">Crear Registro Supervisor</button>
+<button id="crearDirectorBtn">Crear Registro Director</button>
 </head>
 <body>
     <h1>Bienvenido</h1>
-    
-    <!-- Aquí los botones para crear registros -->
-    <button id="crearRegistroBtn">Crear Registro Operador</button>
-    <button id="crearSupervisorBtn">Crear Registro Supervisor</button>
-    <button id="crearDirectorBtn">Crear Registro Director</button>
-    
     <form id="loginForm">
         <div class="form-group">
             <label for="usuario">Usuario:</label>
@@ -48,14 +45,10 @@
           .then(response => response.json())
           .then(data => {
             if (data.nivel) {
-              // Si nivel es Operador, redirige
-              if (data.nivel === 'Operador') {
-                window.location.href = 'operador.html'; // ajusta la ruta si es necesario
-              } else {
-                // otros niveles
-                mensajeError.style.color = 'green';
-                mensajeError.textContent = 'Ingreso correcto! Nivel: ' + data.nivel;
-              }
+              // Si la respuesta tiene el nivel, login correcto
+              mensajeError.style.color = 'green';
+              mensajeError.textContent = 'Ingreso correcto! Nivel: ' + data.nivel;
+              // Aquí puedes redirigir o hacer otra acción
             } else {
               // Error en login
               mensajeError.style.color = 'red';
@@ -68,27 +61,10 @@
             console.error('Error:', error);
           });
         });
+      }); asi debe quedar el indice.html? o a cual html deberia agregar: <button id="crearRegistroBtn">Crear Registro Operador</button>
+<button id="crearSupervisorBtn">Crear Registro Supervisor</button>
+<button id="crearDirectorBtn">Crear Registro Director</button>
 
-        // Aquí los eventos para los botones de crear registros
-        document.getElementById('crearRegistroBtn').addEventListener('click', () => {
-          crearRegistro('Operador');
-        });
-        document.getElementById('crearSupervisorBtn').addEventListener('click', () => {
-          crearRegistro('Supervisor');
-        });
-        document.getElementById('crearDirectorBtn').addEventListener('click', () => {
-          crearRegistro('Director');
-        });
-
-        function crearRegistro(tipo) {
-          // Aquí implementas la lógica para crear registros, similar a lo que ya tienes
-          // Por ejemplo, obtener archivos y crear el registro en el contenedor
-          // (Este código ya lo tienes en tus ejemplos previos)
-        }
-      });
-    </script>
-</body>
-</html>
     </script>
 </body>
 </html>
