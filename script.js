@@ -1,20 +1,18 @@
-document.getElementById('crearRegistroBtn').addEventListener('click', function() {
-    // Limpiar el contenedor de seguimiento
-    document.getElementById('seguimientoContainer').innerHTML = '';
-
-    // Función para obtener los nombres de los archivos subidos
-    function getFileNames(inputName) {
-        const input = document.querySelector(`input[name="${inputName}"]`);
-        const files = input.files;
-        let fileNames = [];
-        if (files) {
-            for (let i = 0; i < files.length; i++) {
-                fileNames.push(files[i].name);
-            }
+// Función para obtener los nombres de archivos subidos
+function getFileNames(inputName) {
+    const input = document.querySelector(`input[name="${inputName}"]`);
+    const files = input.files;
+    let fileNames = [];
+    if (files) {
+        for (let i = 0; i < files.length; i++) {
+            fileNames.push(files[i].name);
         }
-        return fileNames.length > 0 ? fileNames.join(', ') : 'No subido';
     }
+    return fileNames.length > 0 ? fileNames.join(', ') : 'No subido';
+}
 
+// Función para crear el registro de seguimiento
+function crearRegistro(usuarioTipo) {
     // Obtener los nombres de los archivos subidos
     const jhaFile = getFileNames('jha_file');
     const procedimientosFile = getFileNames('procedimientos_file');
@@ -22,8 +20,9 @@ document.getElementById('crearRegistroBtn').addEventListener('click', function()
     const permisosFile = getFileNames('permisos_file');
     const eppFile = getFileNames('epp_file');
 
-    // Crear el registro de seguimiento
+    // Crear el registro
     const registro = `
+        <p><strong>${usuarioTipo}:</strong></p>
         <p><strong>JHA:</strong> ${jhaFile}</p>
         <p><strong>PROCEDIMIENTOS:</strong> ${procedimientosFile}</p>
         <p><strong>DC3 COMPETENCIAS:</strong> ${dc3File}</p>
@@ -32,9 +31,23 @@ document.getElementById('crearRegistroBtn').addEventListener('click', function()
         <hr>
     `;
 
-    // Agregar el registro al contenedor
+    // Agregar al contenedor
     document.getElementById('seguimientoContainer').innerHTML += registro;
 
-    // Guardar el registro en el localStorage
+    // Guardar en localStorage
     localStorage.setItem('registroSeguimiento', registro);
+}
+
+// Evento para crear registro de Operador
+document.getElementById('crearRegistroBtn').addEventListener('click', function() {
+    crearRegistro('Operador');
+});
+
+// Si tienes botones para Supervisor y Director, por ejemplo:
+document.getElementById('crearSupervisorBtn').addEventListener('click', function() {
+    crearRegistro('Supervisor');
+});
+
+document.getElementById('crearDirectorBtn').addEventListener('click', function() {
+    crearRegistro('Director');
 });
