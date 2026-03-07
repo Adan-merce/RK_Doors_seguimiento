@@ -25,38 +25,35 @@
         const form = document.getElementById('loginForm');
         const mensajeError = document.getElementById('mensajeError');
 
+        // Usuarios definidos internamente
+        const usuarios = [
+          { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
+          { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
+          { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
+        ];
+
         form.addEventListener('submit', function(event) {
           event.preventDefault();
 
           const usuario = document.getElementById('usuario').value;
           const contrasena = document.getElementById('contraseña').value;
 
-          // Enviar datos al backend
-          fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ usuario: usuario, contrasena: contrasena })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.nivel) {
-              // Si la respuesta tiene el nivel, login correcto
-              mensajeError.style.color = 'green';
-              mensajeError.textContent = 'Ingreso correcto! Nivel: ' + data.nivel;
-              // Aquí puedes redirigir o hacer otra acción
-            } else {
-              // Error en login
-              mensajeError.style.color = 'red';
-              mensajeError.textContent = data.error || 'Error en la login.';
+          // Buscar usuario en la lista interna
+          const user = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
+
+          if (user) {
+            // Datos correctos
+            mensajeError.style.color = 'green';
+            mensajeError.textContent = 'Datos correctos! Nivel: ' + user.nivel;
+            // Aquí puedes redirigir según el nivel
+            if (user.nivel === 'Operador') {
+              // window.location.href = 'operador.html'; // descomenta si tienes esa página
             }
-          })
-          .catch(error => {
+          } else {
+            // Usuario o contraseña incorrectos
             mensajeError.style.color = 'red';
-            mensajeError.textContent = 'Error en la comunicación con el servidor.';
-            console.error('Error:', error);
-          });
+            mensajeError.textContent = 'Usuario o contraseña incorrectos.';
+          }
         });
       });
     </script>
