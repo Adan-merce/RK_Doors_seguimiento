@@ -2,60 +2,56 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" type="text/css" href="estilos.css" />
+    <title>Iniciar Sesión Sin Servidor</title>
 </head>
 <body>
     <h1>Bienvenido</h1>
     <form id="loginForm">
-        <div class="form-group">
+        <div>
             <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" name="usuario" required>
+            <input type="text" id="usuario" required>
         </div>
-        <div class="form-group">
+        <div>
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required>
+            <input type="password" id="contraseña" required>
         </div>
         <button type="submit">Iniciar Sesión</button>
     </form>
-    <p id="mensajeError" style="color:red;"></p>
+    <p id="mensaje" style="color:red;"></p>
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('loginForm');
-        const mensajeError = document.getElementById('mensajeError');
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        // Usuarios definidos internamente
-        const usuarios = [
-          { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
-          { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
-          { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
-        ];
+            const usuarioIngresado = document.getElementById('usuario').value;
+            const contrasenaIngresada = document.getElementById('contraseña').value;
+            const mensaje = document.getElementById('mensaje');
 
-        form.addEventListener('submit', function(event) {
-          event.preventDefault();
+            // Lista de usuarios definidos en código
+            const usuarios = [
+                { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
+                { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
+                { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
+            ];
 
-          const usuario = document.getElementById('usuario').value;
-          const contrasena = document.getElementById('contraseña').value;
+            // Buscar usuario en la lista
+            const usuarioValido = usuarios.find(
+                u => u.usuario === usuarioIngresado && u.contrasena === contrasenaIngresada
+            );
 
-          // Buscar usuario en la lista interna
-          const user = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
+            if (usuarioValido) {
+                // Usuario y contraseña correctos
+                mensaje.style.color = 'green';
+                mensaje.textContent = 'Datos correctos! Nivel: ' + usuarioValido.nivel;
 
-          if (user) {
-            // Datos correctos
-            mensajeError.style.color = 'green';
-            mensajeError.textContent = 'Datos correctos! Nivel: ' + user.nivel;
-            // Aquí puedes redirigir según el nivel
-            if (user.nivel === 'Operador') {
-              // window.location.href = 'operador.html'; // descomenta si tienes esa página
+                // Aquí puedes redirigir a otra página si quieres
+                // Ejemplo: window.location.href = 'operador.html';
+            } else {
+                // Datos incorrectos
+                mensaje.style.color = 'red';
+                mensaje.textContent = 'Usuario o contraseña incorrectos.';
             }
-          } else {
-            // Usuario o contraseña incorrectos
-            mensajeError.style.color = 'red';
-            mensajeError.textContent = 'Usuario o contraseña incorrectos.';
-          }
         });
-      });
     </script>
 </body>
 </html>
