@@ -39,16 +39,23 @@
                 mensaje.style.color = 'green';
                 mensaje.textContent = 'Datos correctos! Nivel: ' + user.nivel;
 
-                // Si es operador, redirige a operador.html
+                // Redirigir según el nivel
                 if (user.nivel === 'Operador') {
-                    window.location.href = 'operador.html'; // Asegúrate que el archivo esté en la misma carpeta
+                    window.location.href = 'operador.html';
+                } else if (user.nivel === 'Supervisor') {
+                    window.location.href = 'supervisor.html';
+                } else if (user.nivel === 'Director') {
+                    window.location.href = 'director.html';
                 }
-                // Puedes agregar más condiciones para otros niveles si quieres redireccionar a otras páginas
             } else {
                 // Datos incorrectos
                 mensaje.style.color = 'red';
                 mensaje.textContent = 'Usuario o contraseña incorrectos.';
             }
+        });
+    </script>
+</body>
+</html>
         });
     </script>
 </body>
