@@ -4,136 +4,50 @@
 <meta charset="UTF-8" />
 <title>Perfil Operador</title>
 <link rel="stylesheet" type="text/css" href="estilos.css">
-<style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto en blanco */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 0;
-  }
-
-  h1 {
-    color: #FFD700; /* Dorado */
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  h2 {
-    color: #FFD700;
-    margin-top: 30px;
-    margin-bottom: 15px;
-  }
-
-  /* Sección de subir archivos eliminada */
-
-  /* Seguimiento container */
-  #seguimientoContainer {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #555;
-    background-color: #222;
-    border-radius: 8px;
-    box-sizing: border-box;
-    color: #fff;
-  }
-
-  /* Estilo para los textos en la sección */
-  /* Si hay textos en negro, cámbialos a blanco o dorado en tu CSS */
-
-  /* Estilo para el botón de enviar correo */
-  #enviarCorreoBtn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 20px;
-    background-color: #FFD700;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  #enviarCorreoBtn:hover {
-    background-color: #c5a200;
-  }
-
-  /* Contenedor del formulario de correo */
-  #correoContainer {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background-color: #222;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #555;
-    max-width: 400px;
-    width: 90%;
-  }
-
-  #correoContainer p {
-    margin: 10px 0;
-    color: #fff;
-  }
-
-  #correoContainer input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-
-  #correoContainer button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  #correoContainer button:hover {
-    background-color: #0056b3;
-  }
-
-  #mensajeEnvio {
-    margin-top: 10px;
-    color: #0f0; /* verde para éxito */
-  }
-</style>
 </head>
 <body>
-
 <h1>Bienvenido, Operador</h1>
+
+<h2>Subir Archivos</h2>
+<form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+    <div>
+        <h3>Avances</h3>
+        <input type="file" name="avance_file">
+    </div>
+    <div>
+        <h3>Evidencia</h3>
+        <input type="file" name="evidencia_file">
+    </div>
+    <div>
+        <h3>Reporte</h3>
+        <input type="file" name="reporte_file">
+    </div>
+    <button type="submit">Subir Archivos</button>
+</form>
 
 <h2>Seguimiento</h2>
 <div id="seguimientoContainer">
-  <!-- Aquí se mostrará el registro de seguimiento -->
+    <!-- Aquí se mostrará el registro de seguimiento -->
 </div>
+
+<script src="script.js"></script>
 
 <!-- Botón para solicitar envío por email -->
 <button id="enviarCorreoBtn">Enviar a Correo</button>
 
 <!-- Contenedor que se mostrará al hacer clic -->
-<div id="correoContainer">
+<div id="correoContainer" style="display:none; margin-top:20px; padding:15px; border:1px solid #ccc; background:#f9f9f9; border-radius:8px; max-width:400px;">
     <p>Ingresa tu correo electrónico:</p>
-    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" />
-    <button id="enviarCorreoBtn2">Enviar</button>
-    <p id="mensajeEnvio"></p>
+    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" style="width:100%; padding:8px; margin-top:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:4px;">
+    <br>
+    <button id="enviarCorreoBtn2" style="padding:10px 15px; background-color:#007BFF; color:#fff; border:none; border-radius:4px; cursor:pointer;">Enviar</button>
+    <p id="mensajeEnvio" style="margin-top:10px;"></p>
 </div>
 
 <script>
   // Mostrar el formulario al hacer clic en el botón
   document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
-      document.getElementById('correoContainer').style.display = 'flex';
+      document.getElementById('correoContainer').style.display = 'block';
   });
   // Acción al hacer clic en "Enviar"
   document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
@@ -141,7 +55,7 @@
       const mensaje = document.getElementById('mensajeEnvio');
       if (email) {
           // Aquí puedes integrar tu lógica para enviar el email
-          mensaje.style.color = '#0f0';
+          mensaje.style.color = 'green';
           mensaje.textContent = 'Correo enviado a: ' + email;
       } else {
           mensaje.style.color = 'red';
@@ -149,10 +63,8 @@
       }
   });
 </script>
-
 </body>
 </html>
-</script>
 
 </body>
 </html>
