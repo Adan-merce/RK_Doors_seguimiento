@@ -28,13 +28,49 @@
     margin-bottom: 15px;
   }
 
-  /* Sección de subir archivos eliminada */
+  /* La sección de subir archivos se mantiene, solo la ajusto con estilos */
+  form {
+    width: 90%;
+    max-width: 600px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #555;
+  }
+  form h3 {
+    color: #FFD700;
+    margin-top: 10px;
+  }
+  input[type="file"] {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+  }
+  /* El botón de subir archivos */
+  form button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  form button:hover {
+    background-color: #c5a200;
+  }
 
   /* Seguimiento container */
   #seguimientoContainer {
     width: 80%;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid #555;
     background-color: #222;
@@ -42,9 +78,6 @@
     box-sizing: border-box;
     color: #fff;
   }
-
-  /* Estilo para los textos en la sección */
-  /* Si hay textos en negro, cámbialos a blanco o dorado en tu CSS */
 
   /* Estilo para el botón de enviar correo */
   #enviarCorreoBtn {
@@ -57,9 +90,7 @@
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
   }
-
   #enviarCorreoBtn:hover {
     background-color: #c5a200;
   }
@@ -76,12 +107,10 @@
     max-width: 400px;
     width: 90%;
   }
-
   #correoContainer p {
     margin: 10px 0;
     color: #fff;
   }
-
   #correoContainer input[type="email"] {
     width: 100%;
     padding: 10px;
@@ -89,7 +118,6 @@
     border-radius: 4px;
     margin-bottom: 10px;
   }
-
   #correoContainer button {
     width: 100%;
     padding: 10px;
@@ -99,20 +127,29 @@
     border-radius: 4px;
     cursor: pointer;
   }
-
   #correoContainer button:hover {
     background-color: #0056b3;
   }
-
   #mensajeEnvio {
     margin-top: 10px;
-    color: #0f0; /* verde para éxito */
+    color: #0f0;
   }
 </style>
 </head>
 <body>
 
 <h1>Bienvenido, Operador</h1>
+
+<h2>Subir Archivos</h2>
+<form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
+    <h3>Avances</h3>
+    <input type="file" name="avance_file" />
+    <h3>Evidencia</h3>
+    <input type="file" name="evidencia_file" />
+    <h3>Reporte</h3>
+    <input type="file" name="reporte_file" />
+    <button type="submit">Subir Archivos</button>
+</form>
 
 <h2>Seguimiento</h2>
 <div id="seguimientoContainer">
