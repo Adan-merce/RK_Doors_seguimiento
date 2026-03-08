@@ -39,12 +39,11 @@
                 mensaje.style.color = 'green';
                 mensaje.textContent = 'Datos correctos! Nivel: ' + user.nivel;
 
-                // Redirigir si es operador
+                // Si es operador, redirige a operador.html
                 if (user.nivel === 'Operador') {
-                    // Cambia 'perfil-operador.html' por el nombre de tu página del perfil
-                    window.location.href = 'perfil-operador.html';
+                    window.location.href = 'operador.html'; // Asegúrate que el archivo esté en la misma carpeta
                 }
-                // Puedes agregar más condiciones para otros niveles
+                // Puedes agregar más condiciones para otros niveles si quieres redireccionar a otras páginas
             } else {
                 // Datos incorrectos
                 mensaje.style.color = 'red';
@@ -52,7 +51,5 @@
             }
         });
     </script>
-</body>
-</html>
 </body>
 </html>
