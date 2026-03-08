@@ -2,19 +2,95 @@
 <html>
 <head>
     <title>Login - Sistema</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 350px;
+            max-width: 90%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #mensaje {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Iniciar Sesión</h1>
-    <form id="loginForm">
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" required><br><br>
+    <div class="container">
+        <h1>Iniciar Sesión</h1>
+        <form id="loginForm">
+            <label for="usuario">Usuario:</label>
+            <input type="text" id="usuario" required>
 
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" required><br><br>
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" id="contrasena" required>
 
-        <button type="submit">Iniciar Sesión</button>
-    </form>
-    <p id="mensaje" style="color:red;"></p>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p id="mensaje"></p>
+    </div>
 
     <script>
         // Lista de usuarios internos
@@ -31,15 +107,12 @@
             const contrasena = document.getElementById('contrasena').value;
             const mensaje = document.getElementById('mensaje');
 
-            // Buscar usuario en la lista
             const user = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
 
             if (user) {
-                // Datos correctos
                 mensaje.style.color = 'green';
                 mensaje.textContent = 'Datos correctos! Nivel: ' + user.nivel;
 
-                // Redirigir según el nivel
                 if (user.nivel === 'Operador') {
                     window.location.href = 'operador.html';
                 } else if (user.nivel === 'Supervisor') {
@@ -48,7 +121,6 @@
                     window.location.href = 'director.html';
                 }
             } else {
-                // Datos incorrectos
                 mensaje.style.color = 'red';
                 mensaje.textContent = 'Usuario o contraseña incorrectos.';
             }
