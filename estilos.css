@@ -1,110 +1,86 @@
+/* Estilo general del body con fondo y fuente */
 body {
-    font-family: sans-serif;
-    text-align: center;
+    font-family: 'Arial', sans-serif;
     background-color: #333;
-    color: #fff;
     background-image: url("logo.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
     display: flex;
-    flex-direction: column; /* Stack content vertically */
-    justify-content: flex-start; /* Align items to the top */
-    align-items: center; /* Center horizontally */
+    justify-content: center;
+    align-items: flex-start;
     min-height: 100vh;
-    padding-top: 20px; /* Add some padding at the top */
-    box-sizing: border-box; /* Include padding in the height */
+    padding-top: 50px;
+    margin: 0;
 }
 
+/* Contenedor del login con fondo y sombra */
+#loginContainer {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    width: 350px;
+    max-width: 90%;
+}
+
+/* Título */
 h1 {
     color: #FFD700;
     text-align: center;
     margin-bottom: 20px;
+    font-size: 24px;
 }
 
-/* Style for "Documentos a validar" text */
-p {
-    color: #ddd;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-form {
-    width: 400px; /* Increased width for better spacing */
-    padding: 20px;
-    border: 1px solid #555;
-    background-color: #222;
-    margin-bottom: 20px; /* Add space below the form */
-    box-sizing: border-box; /* Include padding and border in the width */
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 15px; /* Increased spacing between list items */
-    color: #ddd;
-    text-align: left; /* Align list items to the left */
-}
-
+/* Etiquetas de los campos */
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
     color: #ddd;
 }
 
-input[type="file"] {
-    margin-top: 5px; /* Add space above the file input */
-    margin-bottom: 10px; /* Add space below the file input */
-    background-color: #444;
-    color: #ddd;
-    padding: 5px;
-    border: 1px solid #666;
-    width: 100%; /* Make file inputs take full width */
-    box-sizing: border-box; /* Include padding and border in the width */
+/* Inputs de texto y contraseña */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #222;
+    color: #fff;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #FFD700;
+}
+
+/* Botón */
 button {
+    width: 100%;
+    padding: 12px;
     background-color: #FFD700;
     color: #000;
-    padding: 10px 15px;
     border: none;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%;
-    box-sizing: border-box; /* Include padding and border in the width */
-    margin-top: 10px; /* Add some space above the buttons */
 }
 
 button:hover {
     background-color: #c5a200;
 }
 
-h2 {
-    color: #FFD700;
+/* Mensaje de respuesta */
+#mensaje {
     text-align: center;
-    margin-top: 30px; /* Add space above the "Seguimiento" heading */
-    margin-bottom: 15px;
-}
-
-#seguimientoContainer {
-    width: 80%; /* Limit the width of the container */
-    max-width: 800px; /* Set a maximum width */
-    margin: 0 auto; /* Center the container */
-    padding: 20px;
-    border: 1px solid #555;
-    background-color: #222;
-    text-align: left; /* Align text within the container to the left */
-    box-sizing: border-box; /* Include padding and border in the width */
-}
-
-#seguimientoContainer p {
-    margin-bottom: 10px;
-}
-
-#mensajeError {
-    color: #f00;
-    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
 }
