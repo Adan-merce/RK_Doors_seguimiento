@@ -1,51 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <title>Iniciar Sesión Sin Servidor</title>
+    <title>Login - Sistema</title>
 </head>
 <body>
-    <h1>Bienvenido</h1>
+    <h1>Iniciar Sesión</h1>
     <form id="loginForm">
-        <div>
-            <label for="usuario">Usuario:</label>
-            <input type="text" id="usuario" required>
-        </div>
-        <div>
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" required>
-        </div>
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" required><br><br>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" required><br><br>
+
         <button type="submit">Iniciar Sesión</button>
     </form>
     <p id="mensaje" style="color:red;"></p>
 
     <script>
+        // Lista de usuarios internos
+        const usuarios = [
+            { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
+            { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
+            { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
+        ];
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const usuarioIngresado = document.getElementById('usuario').value;
-            const contrasenaIngresada = document.getElementById('contraseña').value;
+            const usuario = document.getElementById('usuario').value;
+            const contrasena = document.getElementById('contrasena').value;
             const mensaje = document.getElementById('mensaje');
 
-            // Lista de usuarios definidos en código
-            const usuarios = [
-                { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
-                { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
-                { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
-            ];
-
             // Buscar usuario en la lista
-            const usuarioValido = usuarios.find(
-                u => u.usuario === usuarioIngresado && u.contrasena === contrasenaIngresada
-            );
+            const user = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
 
-            if (usuarioValido) {
-                // Usuario y contraseña correctos
+            if (user) {
+                // Datos correctos
                 mensaje.style.color = 'green';
-                mensaje.textContent = 'Datos correctos! Nivel: ' + usuarioValido.nivel;
+                mensaje.textContent = 'Datos correctos! Nivel: ' + user.nivel;
 
-                // Aquí puedes redirigir a otra página si quieres
-                // Ejemplo: window.location.href = 'operador.html';
+                // Redirigir si es operador
+                if (user.nivel === 'Operador') {
+                    // Cambia 'perfil-operador.html' por el nombre de tu página del perfil
+                    window.location.href = 'perfil-operador.html';
+                }
+                // Puedes agregar más condiciones para otros niveles
             } else {
                 // Datos incorrectos
                 mensaje.style.color = 'red';
@@ -53,5 +52,7 @@
             }
         });
     </script>
+</body>
+</html>
 </body>
 </html>
