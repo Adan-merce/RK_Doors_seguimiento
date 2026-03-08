@@ -5,40 +5,51 @@
     <link rel="stylesheet" type="text/css" href="estilos.css">
 </head>
 <body>
-    <h1>Bienvenido, Supervisor</h1>
-    <p>Documentos a validar:</p>
-    <form id="uploadForm" action="tu_script_de_subida.php" method="post" enctype="multipart/form-data">
-        <ul>
-            <li>
-                JHA
-                <input type="file" name="jha_file">
-            </li>
-            <li>
-                PROCEDIMIENTOS
-                <input type="file" name="procedimientos_file">
-            </li>
-            <li>
-                DC3 COMPETENCIAS
-                <input type="file" name="dc3_file">
-            </li>
-            <li>
-                PERMISOS DE TRABAJO DIARIOS
-                <input type="file" name="permisos_file">
-            </li>
-            <li>
-                EPP y herramientas Validadas por parte de sup de seguridad
-                <input type="file" name="epp_file">
-            </li>
-        </ul>
-        <button type="submit">Enviar Documentos</button>
-        <button type="button" id="crearRegistroBtn">Crear Registro de Seguimiento</button>
-    </form>
+<h1>Bienvenido, Supervisor</h1>
+<p>Documentos a validar:</p>
+<form id="uploadForm" action="tu_script_de_subida.php" method="post" enctype="multipart/form-data">
+    <ul>
+        <li>JHA<input type="file" name="jha_file"></li>
+        <li>PROCEDIMIENTOS<input type="file" name="procedimientos_file"></li>
+        <li>DC3 COMPETENCIAS<input type="file" name="dc3_file"></li>
+        <li>PERMISOS DE TRABAJO DIARIOS<input type="file" name="permisos_file"></li>
+        <li>EPP y herramientas Validadas por parte de sup de seguridad<input type="file" name="epp_file"></li>
+    </ul>
+    <button type="submit">Enviar Documentos</button>
+    <button type="button" id="crearRegistroBtn">Crear Registro de Seguimiento</button>
+</form>
 
-    <h2>Seguimiento</h2>
-    <div id="seguimientoContainer">
-        <!-- Aquí se mostrará el registro de seguimiento -->
-    </div>
+<h2>Seguimiento</h2>
+<div id="seguimientoContainer"></div>
 
-    <script src="script.js"></script>
+<!-- Botón para solicitar envío por email -->
+<button id="enviarCorreoBtn">Enviar a Correo</button>
+
+<!-- Contenedor que se mostrará al hacer clic -->
+<div id="correoContainer">
+    <p>Ingresa tu correo electrónico:</p>
+    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" />
+    <button id="enviarCorreoBtn2">Enviar</button>
+    <p id="mensajeEnvio"></p>
+</div>
+
+<script>
+  // Mostrar el formulario al hacer clic en el botón
+  document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
+      document.getElementById('correoContainer').style.display = 'flex';
+  });
+  // Acción en enviar
+  document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
+      const email = document.getElementById('correoInput').value;
+      const mensaje = document.getElementById('mensajeEnvio');
+      if (email) {
+          mensaje.style.color = '#0f0';
+          mensaje.textContent = 'Correo enviado a: ' + email;
+      } else {
+          mensaje.style.color = 'red';
+          mensaje.textContent = 'Por favor, ingresa un correo válido.';
+      }
+  });
+</script>
 </body>
 </html>
