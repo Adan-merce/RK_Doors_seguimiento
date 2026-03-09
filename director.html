@@ -5,170 +5,193 @@
 <title>Perfil Director</title>
 <link rel="stylesheet" type="text/css" href="estilos.css">
 <style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto en blanco */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 0;
-  }
+body {
+font-family: 'Arial', sans-serif;
+background-color: #000;
+color: #fff;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px;
+margin: 0;
+}
 
-  h1 {
-    color: #FFD700; /* Dorado */
-    text-align: center;
-    margin-bottom: 20px;
-  }
+h1 {
+color: #FFD700;
+text-align: center;
+margin-bottom: 20px;
+}
 
-  h2 {
-    color: #FFD700;
-    margin-top: 30px;
-    margin-bottom: 15px;
-  }
+h2 {
+color: #FFD700;
+margin-top: 30px;
+margin-bottom: 15px;
+}
 
-  /* La sección de subir archivos */
-  form {
-    width: 90%;
-    max-width: 600px;
-    background-color: #222;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #555;
-  }
-  form h3 {
-    color: #FFD700;
-    margin-top: 10px;
-  }
-  input[type="file"] {
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    padding: 8px;
-    border: 1px solid #555;
-    border-radius: 4px;
-  }
+form {
+width: 90%;
+max-width: 600px;
+background-color: #222;
+padding: 20px;
+border-radius: 8px;
+border: 1px solid #555;
+}
 
-  /* Seguimiento container */
-  #seguimientoContainer {
-    width: 80%;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #555;
-    background-color: #222;
-    border-radius: 8px;
-    box-sizing: border-box;
-    color: #fff;
-  }
+form h3 {
+color: #FFD700;
+margin-top: 10px;
+}
 
-  /* Botón para enviar a correo */
-  #enviarCorreoBtn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 20px;
-    background-color: #FFD700;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  #enviarCorreoBtn:hover {
-    background-color: #c5a200;
-  }
+input[type="file"] {
+width: 100%;
+margin-top: 5px;
+margin-bottom: 15px;
+padding: 8px;
+border: 1px solid #555;
+border-radius: 4px;
+}
 
-  /* Contenedor del formulario de correo */
-  #correoContainer {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    background-color: #222;
-    padding: 20px;
-    border-radius: 8px;
-    border: 1px solid #555;
-    max-width: 400px;
-    width: 90%;
-  }
-  #correoContainer p {
-    margin: 10px 0;
-    color: #fff;
-  }
-  #correoContainer input[type="email"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-  #correoContainer button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  #correoContainer button:hover {
-    background-color: #0056b3;
-  }
-  #mensajeEnvio {
-    margin-top: 10px;
-    color: #0f0;
-  }
+#seguimientoContainer {
+width: 80%;
+max-width: 800px;
+margin: 20px auto;
+padding: 20px;
+border: 1px solid #555;
+background-color: #222;
+border-radius: 8px;
+box-sizing: border-box;
+color: #fff;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 10px;
+}
+
+th, td {
+border: 1px solid #555;
+padding: 10px;
+text-align: left;
+}
+
+th {
+background-color: #333;
+color: #FFD700;
+}
+
+tr:nth-child(even) {
+background-color: #2a2a2a;
+}
+
+#enviarCorreoBtn {
+display: block;
+margin: 20px auto;
+padding: 12px 20px;
+background-color: #FFD700;
+color: #000;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+cursor: pointer;
+}
+
+#enviarCorreoBtn:hover {
+background-color: #c5a200;
+}
+
+#correoContainer {
+display: none;
+flex-direction: column;
+align-items: center;
+background-color: #222;
+padding: 20px;
+border-radius: 8px;
+border: 1px solid #555;
+max-width: 400px;
+width: 90%;
+}
+
+#correoContainer input {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+border: 1px solid #555;
+border-radius: 4px;
+}
 </style>
 </head>
+
 <body>
 
 <h1>Bienvenido, Director</h1>
 
 <h2>Subir Archivos</h2>
 <form id="uploadForm" action="tu_script_de_subida.php" method="post" enctype="multipart/form-data">
-    <h3>JHA</h3>
-    <input type="file" name="jha_file" />
-    <h3>PROCEDIMIENTOS</h3>
-    <input type="file" name="procedimientos_file" />
-    <h3>DC3 COMPETENCIAS</h3>
-    <input type="file" name="dc3_file" />
-    <h3>PERMISOS DE TRABAJO DIARIOS</h3>
-    <input type="file" name="permisos_file" />
-    <h3>EPP y herramientas Validadas por parte de sup de seguridad</h3>
-    <input type="file" name="epp_file" />
+<h3>JHA</h3>
+<input type="file" name="jha_file" />
+
+<h3>PROCEDIMIENTOS</h3>
+<input type="file" name="procedimientos_file" />
+
+<h3>DC3 COMPETENCIAS</h3>
+<input type="file" name="dc3_file" />
+
+<h3>PERMISOS DE TRABAJO DIARIOS</h3>
+<input type="file" name="permisos_file" />
+
+<h3>EPP y herramientas Validadas por parte de sup de seguridad</h3>
+<input type="file" name="epp_file" />
 </form>
 
 <h2>Seguimiento</h2>
+
 <div id="seguimientoContainer">
-  <!-- Aquí se mostrará el registro de seguimiento -->
+
+<table>
+<thead>
+<tr>
+<th>Nombre o Archivo</th>
+<th>Fecha</th>
+<th>Estado</th>
+</tr>
+</thead>
+
+<tbody id="tablaSeguimiento">
+</tbody>
+
+</table>
+
 </div>
 
-<!-- Botón para solicitar envío por email -->
 <button id="enviarCorreoBtn">Enviar a Correo</button>
 
-<!-- Contenedor del formulario de correo -->
 <div id="correoContainer">
-    <p>Ingresa tu correo electrónico:</p>
-    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" />
-    <button id="enviarCorreoBtn2">Enviar</button>
-    <p id="mensajeEnvio"></p>
+<p>Ingresa tu correo electrónico:</p>
+<input type="email" id="correoInput" placeholder="ejemplo@correo.com">
+<button id="enviarCorreoBtn2">Enviar</button>
+<p id="mensajeEnvio"></p>
 </div>
 
 <script>
-  document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
-      document.getElementById('correoContainer').style.display = 'flex';
-  });
-  document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
-      const email = document.getElementById('correoInput').value;
-      const mensaje = document.getElementById('mensajeEnvio');
-      if (email) {
-          mensaje.style.color = '#0f0';
-          mensaje.textContent = 'Correo enviado a: ' + email;
-      } else {
-          mensaje.style.color = 'red';
-          mensaje.textContent = 'Por favor, ingresa un correo válido.';
-      }
-  });
+document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
+document.getElementById('correoContainer').style.display = 'flex';
+});
+
+document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
+
+const email = document.getElementById('correoInput').value;
+const mensaje = document.getElementById('mensajeEnvio');
+
+if (email) {
+mensaje.style.color = '#0f0';
+mensaje.textContent = 'Correo enviado a: ' + email;
+} else {
+mensaje.style.color = 'red';
+mensaje.textContent = 'Por favor, ingresa un correo válido.';
+}
+
+});
 </script>
 
 </body>
