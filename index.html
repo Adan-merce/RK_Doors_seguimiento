@@ -60,23 +60,31 @@
     border-color: #FFD700;
   }
 
-  /* Contenedor para la contraseña y botón en línea */
   .password-container {
-    position: relative;
     display: flex;
     align-items: center;
+    gap: 6px;
+    margin-bottom: 15px;
   }
 
-  /* El botón de mostrar/ocultar contraseña */
+  .password-container input {
+    flex: 1;
+  }
+
+  /* Botón pequeño para mostrar contraseña */
   #mostrarContrasena {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    font-size: 16px;
     background: none;
-    border: none;
+    border: 1px solid #555;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 18px;
+  }
+
+  #mostrarContrasena:hover {
+    border-color: #FFD700;
   }
 
   button {
@@ -103,25 +111,30 @@
 </style>
 </head>
 <body>
+
 <div id="loginContainer">
   <h1>Iniciar Sesión</h1>
+
   <form id="loginForm">
+
     <label for="usuario">Usuario:</label>
     <input type="text" id="usuario" required />
 
     <label for="contrasena">Contraseña:</label>
+
     <div class="password-container">
-      <input type="password" id="contrasena" required />
-      <button type="button" id="mostrarContrasena" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+      <input type="password" id="contrasena" required>
+      <button type="button" id="mostrarContrasena">👁️</button>
     </div>
 
     <button type="submit">Iniciar Sesión</button>
+
   </form>
+
   <p id="mensaje"></p>
 </div>
 
 <script>
-  // Lista de usuarios internos
   const usuarios = [
     { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
     { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
@@ -154,9 +167,9 @@
     }
   });
 
-  // Función para mostrar u ocultar contraseña
   document.getElementById('mostrarContrasena').addEventListener('click', function() {
     const input = document.getElementById('contrasena');
+
     if (input.type === 'password') {
       input.type = 'text';
       this.textContent = '🙈';
@@ -166,5 +179,6 @@
     }
   });
 </script>
+
 </body>
 </html>
