@@ -60,14 +60,10 @@
     border-color: #FFD700;
   }
 
-  /* Contenedor para la contraseña y botón en línea */
   .password-container {
     position: relative;
-    display: flex;
-    align-items: center;
   }
 
-  /* El botón de mostrar/ocultar contraseña */
   #mostrarContrasena {
     position: absolute;
     right: 10px;
@@ -103,20 +99,27 @@
 </style>
 </head>
 <body>
+
 <div id="loginContainer">
   <h1>Iniciar Sesión</h1>
+
   <form id="loginForm">
+
     <label for="usuario">Usuario:</label>
     <input type="text" id="usuario" required />
 
     <label for="contrasena">Contraseña:</label>
-    <div class="password-container">
-      <input type="password" id="contrasena" required />
-      <button type="button" id="mostrarContrasena" aria-label="Mostrar/Ocultar contraseña">👁️</button>
+
+    <!-- MODIFICACIÓN: botón al lado del campo -->
+    <div class="password-container" style="display:flex; align-items:center; gap:8px;">
+      <input type="password" id="contrasena" required style="flex:1;">
+      <button type="button" id="mostrarContrasena" aria-label="Mostrar/Ocultar contraseña" style="position:static;">👁️</button>
     </div>
 
     <button type="submit">Iniciar Sesión</button>
+
   </form>
+
   <p id="mensaje"></p>
 </div>
 
@@ -154,9 +157,10 @@
     }
   });
 
-  // Función para mostrar u ocultar contraseña
+  // Mostrar u ocultar contraseña
   document.getElementById('mostrarContrasena').addEventListener('click', function() {
     const input = document.getElementById('contrasena');
+
     if (input.type === 'password') {
       input.type = 'text';
       this.textContent = '🙈';
@@ -166,5 +170,6 @@
     }
   });
 </script>
+
 </body>
 </html>
