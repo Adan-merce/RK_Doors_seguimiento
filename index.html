@@ -134,18 +134,18 @@
       mensaje.textContent = 'Usuario o contraseña incorrectos.';
     }
   });
-</script>
-<script>
-document.getElementById('mostrarContrasena').addEventListener('click', function() {
-  const input = document.getElementById('contrasena');
-  if (input.type === 'password') {
-    input.type = 'text';
-    this.textContent = '🙈';
-  } else {
-    input.type = 'password';
-    this.textContent = '👁️';
-  }
-});
+
+  // Función para mostrar u ocultar contraseña
+  document.getElementById('mostrarContrasena').addEventListener('click', function() {
+    const input = document.getElementById('contrasena');
+    if (input.type === 'password') {
+      input.type = 'text';
+      this.textContent = '🙈'; // icono para ocultar
+    } else {
+      input.type = 'password';
+      this.textContent = '👁️'; // icono para mostrar
+    }
+  });
 </script>
 </body>
 </html>
