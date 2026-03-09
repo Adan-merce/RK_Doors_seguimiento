@@ -92,9 +92,9 @@
 
     <label for="contrasena">Contraseña:</label>
     <div style="position:relative;">
-    <input type="password" id="contrasena" required />
-    <button type="button" id="mostrarContrasena" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;">👁️</button>
-  </div>
+      <input type="password" id="contrasena" required />
+      <button type="button" id="mostrarContrasena" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;">👁️</button>
+    </div>
 
     <button type="submit">Iniciar Sesión</button>
   </form>
@@ -135,156 +135,17 @@
     }
   });
 </script>
-  <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<title>Login - Sistema</title>
-<style>
-  body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('https://github.com/Adan-merce/RK_Doors_seguimiento/raw/main/logo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #loginContainer {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    width: 350px;
-    max-width: 90%;
-    color: #fff;
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #FFD700;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px 15px;
-    margin-bottom: 15px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #222;
-    color: #fff;
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-
-  input[type="text"]:focus,
-  input[type="password"]:focus {
-    border-color: #FFD700;
-  }
-
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: #FFD700;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  button:hover {
-    background-color: #c5a200;
-  }
-
-  #mensaje {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 14px;
-  }
-</style>
-</head>
-<body>
-<div id="loginContainer">
-  <h1>Iniciar Sesión</h1>
-  <form id="loginForm">
-    <label for="usuario">Usuario:</label>
-    <input type="text" id="usuario" required />
-
-    <label for="contrasena">Contraseña:</label>
-    <div style="position:relative;">
-    <input type="password" id="contrasena" required />
-    <button type="button" id="mostrarContrasena" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;">👁️</button>
-  </div>
-
-    <button type="submit">Iniciar Sesión</button>
-  </form>
-  <p id="mensaje"></p>
-</div>
-
 <script>
-  // Lista de usuarios internos
-  const usuarios = [
-    { usuario: 'Operacion_RK', contrasena: 'Ope_Rk_doors_0198', nivel: 'Operador' },
-    { usuario: 'Supervisor_RK', contrasena: 'Super_Rk_doors_9180', nivel: 'Supervisor' },
-    { usuario: 'Direccion_RK', contrasena: 'Dirrec_Rk_doors_0000', nivel: 'Director' }
-  ];
-
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const usuario = document.getElementById('usuario').value;
-    const contrasena = document.getElementById('contrasena').value;
-    const mensaje = document.getElementById('mensaje');
-
-    const user = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
-
-    if (user) {
-      mensaje.style.color = 'green';
-      mensaje.textContent = 'Datos correctos! Nivel: ' + user.nivel;
-
-      if (user.nivel === 'Operador') {
-        window.location.href = 'operador.html';
-      } else if (user.nivel === 'Supervisor') {
-        window.location.href = 'supervisor.html';
-      } else if (user.nivel === 'Director') {
-        window.location.href = 'director.html';
-      }
-    } else {
-      mensaje.style.color = 'red';
-      mensaje.textContent = 'Usuario o contraseña incorrectos.';
-    }
-  });
-</script>
-</body>
-  <script>
 document.getElementById('mostrarContrasena').addEventListener('click', function() {
   const input = document.getElementById('contrasena');
   if (input.type === 'password') {
     input.type = 'text';
-    this.textContent = '🙈'; // icono para ocultar
+    this.textContent = '🙈';
   } else {
     input.type = 'password';
-    this.textContent = '👁️'; // icono para mostrar
+    this.textContent = '👁️';
   }
 });
 </script>
-</html>
 </body>
 </html>
