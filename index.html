@@ -60,6 +60,25 @@
     border-color: #FFD700;
   }
 
+  /* Contenedor para la contraseña y botón en línea */
+  .password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  /* El botón de mostrar/ocultar contraseña */
+  #mostrarContrasena {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+  }
+
   button {
     width: 100%;
     padding: 12px;
@@ -91,9 +110,9 @@
     <input type="text" id="usuario" required />
 
     <label for="contrasena">Contraseña:</label>
-    <div style="position:relative;">
+    <div class="password-container">
       <input type="password" id="contrasena" required />
-      <button type="button" id="mostrarContrasena" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer;">👁️</button>
+      <button type="button" id="mostrarContrasena" aria-label="Mostrar/Ocultar contraseña">👁️</button>
     </div>
 
     <button type="submit">Iniciar Sesión</button>
