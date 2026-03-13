@@ -1,3 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Perfil Operador</title>
+<link rel="stylesheet" type="text/css" href="estilos.css">
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+  }
+
+  h1 {
+    color: #FFD700;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    color: #FFD700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  form {
+    width: 90%;
+    max-width: 600px;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #555;
+  }
+
+  form h3 {
+    color: #FFD700;
+    margin-top: 10px;
+  }
+
+  input[type="file"] {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+  }
+
+  form button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  form button:hover {
+    background-color: #c5a200;
+  }
+
+  #seguimientoContainer {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #555;
+    background-color: #222;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #fff;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+
+  th, td {
+    border: 1px solid #555;
+    padding: 10px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #333;
+    color: #FFD700;
+  }
+
+  tr:nth-child(even) {
+    background-color: #2a2a2a;
+  }
+
+  #enviarCorreoBtn {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 20px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #enviarCorreoBtn:hover {
+    background-color: #c5a200;
+  }
+
+  #correoContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    max-width: 400px;
+    width: 90%;
+  }
+
+  #correoContainer p {
+    margin: 10px 0;
+  }
+
+  #correoContainer input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  #correoContainer button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  #correoContainer button:hover {
+    background-color: #0056b3;
+  }
+
+  #mensajeEnvio {
+    margin-top: 10px;
+    color: #0f0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Bienvenido, Operador</h1>
+
 <h2>Subir Archivos</h2>
 <form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
     <h3>Avances</h3>
@@ -8,47 +175,53 @@
     <input type="file" name="reporte_file" />
 </form>
 
-<!-- Botón para registrar archivos en la hoja -->
-<button id="registrarBtn">Registrar en Hoja</button>
+<h2>Seguimiento</h2>
+<div id="seguimientoContainer">
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre o Archivo</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+
+    <tbody id="tablaSeguimiento">
+      <!-- VACÍO: aquí se agregarán datos en el futuro -->
+    </tbody>
+
+  </table>
+
+</div>
+
+<button id="enviarCorreoBtn">Enviar a Correo</button>
+
+<div id="correoContainer">
+    <p>Ingresa tu correo electrónico:</p>
+    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" />
+    <button id="enviarCorreoBtn2">Enviar</button>
+    <p id="mensajeEnvio"></p>
+</div>
 
 <script>
-  document.getElementById('registrarBtn').addEventListener('click', function() {
-    // Obtener los archivos seleccionados
-    const avances = document.querySelector('input[name="avance_file"]').files;
-    const evidencia = document.querySelector('input[name="evidencia_file"]').files;
-    const reporte = document.querySelector('input[name="reporte_file"]').files;
+  document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
+      document.getElementById('correoContainer').style.display = 'flex';
+  });
 
-    // Crear un array con los nombres de los archivos
-    const archivos = [];
+  document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
+      const email = document.getElementById('correoInput').value;
+      const mensaje = document.getElementById('mensajeEnvio');
 
-    if (avances.length > 0) {
-      archivos.push(avances[0].name);
-    }
-    if (evidencia.length > 0) {
-      archivos.push(evidencia[0].name);
-    }
-    if (reporte.length > 0) {
-      archivos.push(reporte[0].name);
-    }
-
-    // URL de tu endpoint (reemplaza con la que tienes)
-    const url = 'https://script.google.com/macros/s/AKfycbyURO9ESI2UzRJsthE3Xm7g7NhmPEGZYh-Y2EzrMpuC0vvaPu9jgw5hKy6t220cu8Y/exec';
-
-    // Enviar los datos a la API
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ archivos: archivos })
-    })
-    .then(response => response.text())
-    .then(data => {
-      alert('Respuesta del servidor: ' + data);
-    })
-    .catch(error => {
-      alert('Error al enviar los datos: ' + error);
-    });
+      if (email) {
+          mensaje.style.color = '#0f0';
+          mensaje.textContent = 'Correo enviado a: ' + email;
+      } else {
+          mensaje.style.color = 'red';
+          mensaje.textContent = 'Por favor, ingresa un correo válido.';
+      }
   });
 </script>
+
+</body>
 </html>
