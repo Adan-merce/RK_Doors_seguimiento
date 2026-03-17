@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<title>Perfil Operador</title>
+<meta charset="UTF8" />
+<title>Perfil Operador - RKdoors</title>
 <link rel="stylesheet" type="text/css" href="estilos.css">
+
+<!-- Librerías externas -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<!-- Archivos compartidos -->
+<script src="firebase-config.js"></script>
+<script src="funciones-comunes.js"></script>
+
 <style>
   body {
     font-family: 'Arial', sans-serif;
@@ -14,32 +25,42 @@
     align-items: center;
     padding: 20px;
     margin: 0;
+    min-height: 100vh;
   }
 
   h1 {
     color: #FFD700;
     text-align: center;
     margin-bottom: 20px;
+    text-shadow: 0 0 5px rgba(255,215,0,0.5);
   }
 
   h2 {
     color: #FFD700;
     margin-top: 30px;
     margin-bottom: 15px;
+    border-bottom: 1px solid #FFD700;
+    padding-bottom: 5px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
   }
 
   form {
     width: 90%;
     max-width: 600px;
     background-color: #222;
-    padding: 20px;
+    padding: 25px;
     border-radius: 8px;
     border: 1px solid #555;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
 
   form h3 {
     color: #FFD700;
     margin-top: 10px;
+    margin-bottom: 8px;
   }
 
   input[type="file"] {
@@ -49,9 +70,11 @@
     padding: 8px;
     border: 1px solid #555;
     border-radius: 4px;
+    background-color: #333;
+    color: #fff;
   }
 
-  form button {
+  form button, #EnviarAlCorreo, #enviarCorreoBtn2 {
     display: block;
     width: 100%;
     padding: 12px;
@@ -62,10 +85,29 @@
     font-size: 16px;
     cursor: pointer;
     margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
   }
 
-  form button:hover {
+  form button:hover, #EnviarAlCorreo:hover {
     background-color: #c5a200;
+  }
+
+  #enviarCorreoBtn2 {
+    background-color: #007BFF;
+    color: #fff;
+  }
+
+  #enviarCorreoBtn2:hover {
+    background-color: #0056b3;
+  }
+
+  #mensajeSubida, #mensajeEnvio {
+    margin-top: 115px;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px;
   }
 
   #seguimientoContainer {
@@ -78,6 +120,7 @@
     border-radius: 8px;
     box-sizing: border-box;
     color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
 
   table {
@@ -88,33 +131,36 @@
 
   th, td {
     border: 1px solid #555;
-    padding: 10px;
+    padding: 12px;
     text-align: left;
   }
 
   th {
     background-color: #333;
     color: #FFD700;
+    text-align: center;
   }
 
   tr:nth-child(even) {
     background-color: #2a2a2a;
   }
 
-  #enviarCorreoBtn {
-    display: block;
-    margin: 20px auto;
-    padding: 12px 20px;
-    background-color: #FFD700;
-    color: #000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+  tr:hover {
+    background-color: #3a3a3a;
   }
 
-  #enviarCorreoBtn:hover {
-    background-color: #c5a200;
+  .estado-aprobado {
+    color: #28a745;
+    font-weight: bold;
+  }
+
+  .estado-pendiente {
+    color: #ffc107;
+    font-weight: bold;
+  }
+
+  #enviarCorreoBtn {
+    max-width: 300px;
   }
 
   #correoContainer {
@@ -127,10 +173,13 @@
     border: 1px solid #555;
     max-width: 400px;
     width: 90%;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
 
   #correoContainer p {
     margin: 10px 0;
+    text-align: center;
   }
 
   #correoContainer input[type="email"] {
@@ -139,88 +188,208 @@
     border: 1px solid #555;
     border-radius: 4px;
     margin-bottom: 10px;
-  }
-
-  #correoContainer button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
+    background-color: #333;
     color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 16px;
   }
 
-  #correoContainer button:hover {
-    background-color: #0056b3;
-  }
-
-  #mensajeEnvio {
-    margin-top: 10px;
-    color: #0f0;
+  footer {
+    margin-top: auto;
+    padding: 15px;
+    color: #ccc;
+    text-align: center;
   }
 </style>
 </head>
 <body>
 
-<h1>Bienvenido, Operador</h1>
+<h1>Bienvenido al Perfil de Operador</h1>
 
-<h2>Subir Archivos</h2>
-<form id="uploadForm" action="upload.php" method="post" enctype="multipart/form-data">
-    <h3>Avances</h3>
-    <input type="file" name="avance_file" />
-    <h3>Evidencia</h3>
-    <input type="file" name="evidencia_file" />
-    <h3>Reporte</h3>
-    <input type="file" name="reporte_file" />
+<h2>Subir Archivos Requeridos</h2>
+<form id="uploadForm">
+    <h3>Avances del Proyecto</h3>
+    <input type="file" name="avance_file" accept=".pdf,.docx,.xlsx" required />
+    
+    <h3>Evidencia de Ejecución</h3>
+    <input type="file" name="evidencia_file" accept=".pdf,.jpg,.png" required />
+    
+    <h3>Reporte de Actividades Diarias</h3>
+    <input type="file" name="reporte_file" accept=".pdf,.docx" required />
+    
+    <button type="submit">Iniciar Subida de Archivos</button>
+    <p id="mensajeSubida"></p>
 </form>
 
-<h2>Seguimiento</h2>
+<h2>Seguimiento de Tus Archivos</h2>
 <div id="seguimientoContainer">
-
   <table>
     <thead>
       <tr>
-        <th>Nombre o Archivo</th>
-        <th>Fecha</th>
+        <th>Nombre del Archivo</th>
+        <th>Tipo de Archivo</th>
+        <th>Fecha de Carga</th>
         <th>Estado</th>
+        <th>Acceso</th>
       </tr>
     </thead>
-
-    <tbody id="tablaSeguimiento">
-      <!-- VACÍO: aquí se agregarán datos en el futuro -->
-    </tbody>
-
+    <tbody id="tablaSeguimiento"></tbody>
   </table>
-
 </div>
 
-<button id="enviarCorreoBtn">Enviar a Correo</button>
-
+<button id="EnviarAlCorreo">Enviar Listado de Tus Archivos</button>
 <div id="correoContainer">
-    <p>Ingresa tu correo electrónico:</p>
-    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" />
-    <button id="enviarCorreoBtn2">Enviar</button>
+    <p>Ingresa tu correo electrónico para recibir el listado:</p>
+    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" required />
+    <button id="enviarCorreoBtn2">Enviar Correo</button>
     <p id="mensajeEnvio"></p>
 </div>
 
+<footer>
+  <p>&copy; 2026 RKdoors - Todos los derechos reservados</p>
+</footer>
+
 <script>
-  document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
-      document.getElementById('correoContainer').style.display = 'flex';
+  // Cargar datos del Operador al iniciar la página
+  window.onload = async () => {
+    await cargarDatos("Operador");
+  };
+
+  // Manejar subida de archivos
+  document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const mensaje = document.getElementById('mensajeSubida');
+    
+    mensaje.style.color = "#FFD700";
+    mensaje.textContent = "Preparando para subir archivos...";
+
+    try {
+      await subirArchivos(e.target, "Operador");
+      e.target.reset();
+      await cargarDatos("Operador"); // Actualizar tabla sin recargar
+    } catch (err) {
+      mensaje.style.color = "red";
+      mensaje.textContent = "Error en la subida: " + err.message;
+      console.error(err);
+    }
   });
 
-  document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
-      const email = document.getElementById('correoInput').value;
-      const mensaje = document.getElementById('mensajeEnvio');
+  // Sobrescribir función cargarDatos para mostrar estilos de estado
+  async function cargarDatos(rol) {
+    const tabla = document.getElementById('tablaSeguimiento');
+    tabla.innerHTML = ""; // Limpiar tabla antes de cargar
 
-      if (email) {
-          mensaje.style.color = '#0f0';
-          mensaje.textContent = 'Correo enviado a: ' + email;
-      } else {
-          mensaje.style.color = 'red';
-          mensaje.textContent = 'Por favor, ingresa un correo válido.';
+    try {
+      const query = await db.collection("archivos").where("rol", "==", rol).get();
+      
+      if (query.empty) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="5" style="text-align:center; color:#FFD700;">No has cargado archivos aún</td>`;
+        tabla.appendChild(tr);
+        return;
       }
+
+      query.forEach(doc => {
+        const datos = doc.data();
+        const tr = document.createElement("tr");
+        const estadoClase = datos.estado === "Aprobado" ? "estado-aprobado" : "estado-pendiente";
+        tr.innerHTML = `
+          <td>${datos.nombre || "Sin nombre"}</td>
+          <td>${datos.tipo_archivo || "Sin tipo"}</td>
+          <td>${datos.fecha || "Sin fecha"}</td>
+          <td class="${estadoClase}">${datos.estado || "Sin estado"}</td>
+          <td><a href="${datos.enlace}" target="_blank" style="color:#007BFF;">Ver archivo</a></td>
+        `;
+        tabla.appendChild(tr);
+      });
+    } catch (err) {
+      console.error("Error al cargar datos:", err);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="5" style="text-align:center; color:red;">Error al cargar los datos: ${err.message}</td>`;
+      tabla.appendChild(tr);
+    }
+  }
+
+  document.getElementById('EnviarAlCorreo').addEventListener('click', () => {
+    document.getElementById('correoContainer').style.display = 'flex';
   });
+
+async function enviarCorreo(rol) {
+    const email = document.getElementById('correoInput').value;
+    const mensaje = document.getElementById('mensajeEnvio');
+    const tabla = document.getElementById('tablaSeguimiento');
+    const filas = tabla.getElementsByTagName('tr');
+    let listaArchivos = "";
+
+    if (!email || !email.includes("@")) {
+      mensaje.style.color = "red";
+      mensaje.textContent = "Por favor, ingresa un correo electrónico válido.";
+      return;
+    }
+
+    mensaje.style.color = "#FFD700";
+    mensaje.textContent = "Enviando correo...";
+
+    if (filas.length === 0) {
+      listaArchivos = "<p>No hay archivos cargados.</p>";
+    } else {
+      for (let i = 0; i < filas.length; i++) {
+        const celdas = filas[i].getElementsByTagName('td');
+
+        // 🔥 CORREGIDO: SON 5 COLUMNAS
+        if (celdas.length === 5) {
+          const nombre = celdas[0].textContent;
+          const tipo = celdas[1].textContent;
+          const fecha = celdas[2].textContent;
+          const estado = celdas[3].textContent;
+          const link = celdas[4].querySelector("a")?.href || "#";
+
+          listaArchivos += `
+            <li>
+              <strong>${nombre}</strong><br>
+              Tipo: ${tipo}<br>
+              Fecha: ${fecha}<br>
+              Estado: ${estado}<br>
+              <a href="${link}" target="_blank">Ver archivo</a>
+            </li>
+          `;
+        }
+      }
+
+      listaArchivos = `<ul>${listaArchivos}</ul>`;
+    }
+
+    try {
+      await emailjs.send(
+        "service_b2jkurl",
+        "template_fgmopdp", // 🔥 CORREGIDO
+        {
+          to_email: email, // 🔥 CORREGIDO
+          rol_usuario: rol,
+          lista_archivos: listaArchivos,
+          fecha_envio: new Date().toLocaleString("es-MX"),
+        },
+        "8EY_xeQKhFDlEPe8Y"
+      );
+
+      mensaje.style.color = "#0f0";
+      mensaje.textContent = `¡Correo enviado exitosamente a: ${email}!`;
+
+      document.getElementById('correoInput').value = "";
+
+      setTimeout(() => {
+        document.getElementById('correoContainer').style.display = 'none';
+        mensaje.textContent = "";
+      }, 3000);
+
+    } catch (err) {
+      mensaje.style.color = "red";
+      mensaje.textContent = `Error al enviar: ${err.message}`;
+      console.error("Error al enviar correo:", err);
+    }
+}
+document.getElementById('enviarCorreoBtn2').addEventListener('click', () => {
+  enviarCorreo("Operador");
+});
 </script>
 
 </body>
