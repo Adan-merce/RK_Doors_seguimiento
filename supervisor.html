@@ -326,6 +326,9 @@ async function enviarCorreo(rol) {
     mensaje.textContent = "Error: " + err.message;
   }
 }
+  document.getElementById('enviarCorreoBtn2').addEventListener('click', () => {
+  enviarCorreo("Operador");
+});
 </script>
 
 </body>
