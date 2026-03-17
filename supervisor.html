@@ -2,191 +2,330 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<title>Perfil Supervisor</title>
+<title>Perfil Supervisor - RKdoors</title>
 <link rel="stylesheet" type="text/css" href="estilos.css">
+
+<!-- Librerías externas -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<!-- Archivos compartidos -->
+<script src="firebase-config.js"></script>
+<script src="funciones-comunes.js"></script>
+
 <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+    min-height: 100vh;
+  }
 
-body {
-font-family: 'Arial', sans-serif;
-background-color: #000;
-color: #fff;
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 20px;
-margin: 0;
-}
+  h1 {
+    color: #FFD700;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 5px rgba(255,215,0,0.5);
+  }
 
-h1 {
-color: #FFD700;
-text-align: center;
-margin-bottom: 20px;
-}
+  h2 {
+    color: #FFD700;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #FFD700;
+    padding-bottom: 5px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+  }
 
-h2 {
-color: #FFD700;
-margin-top: 30px;
-margin-bottom: 15px;
-}
+  form {
+    width: 90%;
+    max-width: 600px;
+    background-color: #222;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
 
-form {
-width: 90%;
-max-width: 600px;
-background-color: #222;
-padding: 20px;
-border-radius: 8px;
-border: 1px solid #555;
-}
+  form h3 {
+    color: #FFD700;
+    margin-top: 10px;
+    margin-bottom: 8px;
+  }
 
-form h3 {
-color: #FFD700;
-margin-top: 10px;
-}
+  input[type="file"] {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+  }
 
-input[type="file"] {
-width: 100%;
-margin-top: 5px;
-margin-bottom: 15px;
-padding: 8px;
-border: 1px solid #555;
-border-radius: 4px;
-}
+  form button, #enviarCorreoBtn, #enviarCorreoBtn2 {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
 
-#seguimientoContainer {
-width: 80%;
-max-width: 800px;
-margin: 20px auto;
-padding: 20px;
-border: 1px solid #555;
-background-color: #222;
-border-radius: 8px;
-box-sizing: border-box;
-color: #fff;
-}
+  form button:hover, #enviarCorreoBtn:hover {
+    background-color: #c5a200;
+  }
 
-table {
-width: 100%;
-border-collapse: collapse;
-margin-top: 10px;
-}
+  #enviarCorreoBtn2 {
+    background-color: #007BFF;
+    color: #fff;
+  }
 
-th, td {
-border: 1px solid #555;
-padding: 10px;
-text-align: left;
-}
+  #enviarCorreoBtn2:hover {
+    background-color: #0056b3;
+  }
 
-th {
-background-color: #333;
-color: #FFD700;
-}
+  #mensajeSubida, #mensajeEnvio {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 4px;
+  }
 
-tr:nth-child(even) {
-background-color: #2a2a2a;
-}
+  #seguimientoContainer {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #555;
+    background-color: #222;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
 
-#enviarCorreoBtn {
-display: block;
-margin: 20px auto;
-padding: 12px 20px;
-background-color: #FFD700;
-color: #000;
-border: none;
-border-radius: 5px;
-font-size: 16px;
-cursor: pointer;
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
 
-#correoContainer {
-display: none;
-flex-direction: column;
-align-items: center;
-background-color: #222;
-padding: 20px;
-border-radius: 8px;
-border: 1px solid #555;
-max-width: 400px;
-width: 90%;
-}
+  th, td {
+    border: 1px solid #555;
+    padding: 12px;
+    text-align: left;
+  }
 
+  th {
+    background-color: #333;
+    color: #FFD700;
+    text-align: center;
+  }
+
+  tr:nth-child(even) {
+    background-color: #2a2a2a;
+  }
+
+  tr:hover {
+    background-color: #3a3a3a;
+  }
+
+  #enviarCorreoBtn {
+    max-width: 300px;
+  }
+
+  #correoContainer {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    max-width: 400px;
+    width: 90%;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  }
+
+  #correoContainer p {
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  #correoContainer input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  footer {
+    margin-top: auto;
+    padding: 15px;
+    color: #ccc;
+    text-align: center;
+  }
 </style>
 </head>
-
 <body>
 
-<h1>Bienvenido, Supervisor</h1>
+<h1>Bienvenido al Perfil de Supervisor</h1>
 
-<h2>Subir Archivos</h2>
-<form id="uploadForm" action="tu_script_de_subida.php" method="post" enctype="multipart/form-data">
-
-<h3>JHA</h3>
-<input type="file" name="jha_file" />
-
-<h3>PROCEDIMIENTOS</h3>
-<input type="file" name="procedimientos_file" />
-
-<h3>DC3 COMPETENCIAS</h3>
-<input type="file" name="dc3_file" />
-
-<h3>PERMISOS DE TRABAJO DIARIOS</h3>
-<input type="file" name="permisos_file" />
-
-<h3>EPP y herramientas Validadas por parte de sup de seguridad</h3>
-<input type="file" name="epp_file" />
-
+<h2>Subir Archivos Requeridos</h2>
+<form id="uploadForm">
+    <h3>JHA (Análisis de Riesgos de Trabajo)</h3>
+    <input type="file" name="jha_file" accept=".pdf" required />
+    
+    <h3>PROCEDIMIENTOS DE OPERACIÓN</h3>
+    <input type="file" name="procedimientos_file" accept=".pdf,.docx" required />
+    
+    <h3>DC3 COMPETENCIAS DEL PERSONAL</h3>
+    <input type="file" name="dc3_file" accept=".pdf,.xlsx" required />
+    
+    <h3>PERMISOS DE TRABAJO DIARIOS</h3>
+    <input type="file" name="permisos_file" accept=".pdf,.xlsx" required />
+    
+    <h3>EPP y Herramientas Validadas</h3>
+    <input type="file" name="epp_file" accept=".pdf,.jpg,.png" required />
+    
+    <button type="submit">Iniciar Subida de Archivos</button>
+    <p id="mensajeSubida"></p>
 </form>
 
-<h2>Seguimiento</h2>
-
+<h2>Seguimiento de Archivos Cargados</h2>
 <div id="seguimientoContainer">
-
-<table>
-
-<thead>
-<tr>
-<th>Nombre o Archivo</th>
-<th>Fecha</th>
-<th>Estado</th>
-</tr>
-</thead>
-
-<tbody id="tablaSeguimiento">
-</tbody>
-
-</table>
-
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre del Archivo</th>
+        <th>Fecha de Carga</th>
+        <th>Estado</th>
+        <th>Acceso</th>
+      </tr>
+    </thead>
+    <tbody id="tablaSeguimiento"></tbody>
+  </table>
 </div>
 
-<button id="enviarCorreoBtn">Enviar a Correo</button>
-
+<button id="enviarCorreoBtn">Enviar Listado por Correo</button>
 <div id="correoContainer">
-<p>Ingresa tu correo electrónico:</p>
-<input type="email" id="correoInput" placeholder="ejemplo@correo.com">
-<button id="enviarCorreoBtn2">Enviar</button>
-<p id="mensajeEnvio"></p>
+    <p>Ingresa tu correo electrónico para recibir el listado:</p>
+    <input type="email" id="correoInput" placeholder="ejemplo@correo.com" required />
+    <button id="enviarCorreoBtn2">Enviar Correo</button>
+    <p id="mensajeEnvio"></p>
 </div>
+
+<footer>
+  <p>&copy; 2026 RKdoors - Todos los derechos reservados</p>
+</footer>
 
 <script>
+  // Cargar datos al iniciar la página
+  window.onload = async () => {
+    await cargarDatos("Supervisor");
+  };
 
-document.getElementById('enviarCorreoBtn').addEventListener('click', function() {
-document.getElementById('correoContainer').style.display = 'flex';
-});
+  // Manejar subida de archivos
+  document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const mensaje = document.getElementById('mensajeSubida');
+    
+    mensaje.style.color = "#FFD700";
+    mensaje.textContent = "Preparando para subir archivos...";
 
-document.getElementById('enviarCorreoBtn2').addEventListener('click', function() {
+    try {
+      await subirArchivos(e.target, "Supervisor");
+      e.target.reset();
+      await cargarDatos("Supervisor"); // Actualizar tabla sin recargar
+    } catch (err) {
+      console.error(err);
+    }
+  });
 
-const email = document.getElementById('correoInput').value;
-const mensaje = document.getElementById('mensajeEnvio');
+  // Mostrar contenedor de correo
+  document.getElementById('enviarCorreoBtn').addEventListener('click', () => {
+    document.getElementById('correoContainer').style.display = 'flex';
+  });
 
-if (email) {
-mensaje.style.color = '#0f0';
-mensaje.textContent = 'Correo enviado a: ' + email;
-} else {
-mensaje.style.color = 'red';
-mensaje.textContent = 'Por favor, ingresa un correo válido.';
+async function enviarCorreo(rol) {
+  const email = document.getElementById('correoInput').value;
+  const mensaje = document.getElementById('mensajeEnvio');
+  const tabla = document.getElementById('tablaSeguimiento');
+  const filas = tabla.getElementsByTagName('tr');
+  let listaArchivos = "";
+
+  if (!email || !email.includes("@")) {
+    mensaje.style.color = "red";
+    mensaje.textContent = "Por favor, ingresa un correo electrónico válido.";
+    return;
+  }
+
+  mensaje.style.color = "#FFD700";
+  mensaje.textContent = "Enviando listado...";
+
+  if (filas.length === 0) {
+    listaArchivos = "No hay archivos cargados.";
+  } else {
+    for (let i = 0; i < filas.length; i++) {
+      const celdas = filas[i].getElementsByTagName('td');
+
+      // SUPERVISOR tiene 4 columnas
+      if (celdas.length === 4) {
+        const nombre = celdas[0].textContent;
+        const fecha = celdas[1].textContent;
+        const estado = celdas[2].textContent;
+
+        listaArchivos += `<li><strong>${nombre}</strong> - ${fecha} - Estado: ${estado}</li>`;
+      }
+    }
+    listaArchivos = `<ul>${listaArchivos}</ul>`;
+  }
+
+  try {
+    await emailjs.send(
+      "service_b2jkurl",
+      "template_fgmopdp",
+      {
+        to_email: email,
+        rol_usuario: rol,
+        lista_archivos: listaArchivos,
+        fecha_envio: new Date().toLocaleString("es-MX")
+      },
+      "8EY_xeQKhFDlEPe8Y"
+    );
+
+    mensaje.style.color = "#0f0";
+    mensaje.textContent = "¡Correo enviado a: " + email;
+
+  } catch (err) {
+    mensaje.style.color = "red";
+    mensaje.textContent = "Error: " + err.message;
+  }
 }
-
-});
-
 </script>
 
 </body>
