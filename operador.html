@@ -11,9 +11,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
-<!-- Archivos compartidos -->
 <script src="firebase-config.js"></script>
-<script src="funciones-comunes.js"></script>
+<script src="Funciones-comun.js"></script>
+<script src="Operador.html"></script>
 
 <style>
   body {
@@ -207,15 +207,22 @@
 
 <h2>Subir Archivos Requeridos</h2>
 <form id="uploadForm">
+    <!-- ... tus inputs de archivo ... -->
     <h3>Avances del Proyecto</h3>
     <input type="file" name="avance_file" accept=".pdf,.docx,.xlsx" required />
-    
+
     <h3>Evidencia de Ejecución</h3>
     <input type="file" name="evidencia_file" accept=".pdf,.jpg,.png" required />
-    
+
     <h3>Reporte de Actividades Diarias</h3>
     <input type="file" name="reporte_file" accept=".pdf,.docx" required />
-    
+
+    <!-- Barra de progreso -->
+    <div id="uploadProgressContainer" style="width: 100%; background-color: #333; border-radius: 4px; margin-top: 10px; height: 10px;">
+        <div id="progressBar" style="width: 0%; height: 10px; background-color: #FFD700; border-radius: 4px;"></div>
+    </div>
+    <p id="progressText" style="margin-top: 5px; font-size: 0.9em; color: #ccc;"></p>
+
     <button type="submit">Iniciar Subida de Archivos</button>
     <p id="mensajeSubida"></p>
 </form>
