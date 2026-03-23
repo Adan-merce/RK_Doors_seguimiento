@@ -13,7 +13,7 @@
 
 <!-- Archivos compartidos -->
 <script src="firebase-config.js"></script>
-<script src="funciones-comunes.js"></script>
+<script src="Funciones-comun.js"></script>
 
 <style>
   body {
@@ -326,7 +326,7 @@ async function enviarCorreo(rol) {
     mensaje.textContent = "Error: " + err.message;
   }
 }
-  document.getElementById('enviarCorreoBtn2').addEventListener('click', () => {
+document.getElementById('enviarCorreoBtn2').addEventListener('click', () => {
   enviarCorreo("Operador");
 });
 </script>
